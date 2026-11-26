@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+"use client"; import  { useMemo, useState, useEffect } from "react";
 import { Save, History, Trash2, FileSpreadsheet, SlidersHorizontal } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuthStore } from "@/lib/auth-store";
