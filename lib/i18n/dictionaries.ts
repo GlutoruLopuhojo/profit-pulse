@@ -120,6 +120,14 @@ export interface Dictionary {
     stubNotice: string;
     close: string;
   };
+  auth: {
+    login: string;
+    signUp: string;
+    emailPlaceholder: string;
+    passwordPlaceholder: string;
+    needAccount: string;
+    haveAccount: string;
+  };
 }
 
 const en: Dictionary = {
@@ -128,6 +136,14 @@ const en: Dictionary = {
     tagline: "Real-Time P&L, Unit Economics & AI Financial Diagnostics",
     badge: "MVP Analytics",
     currencyNote: "All monetary values are displayed in USD ($)",
+  },
+  auth: {
+    login: "Login",
+    signUp: "Sign Up",
+    emailPlaceholder: "Email",
+    passwordPlaceholder: "Password",
+    needAccount: "Need an account? Sign Up",
+    haveAccount: "Have an account? Login",
   },
   header: {
     languageLabel: "Language",
@@ -363,6 +379,14 @@ const ru: Dictionary = {
     globalButton: "Pay with International Card ($12/мес)",
     stubNotice: "Скоро запуск / Связаться в Telegram",
     close: "Закрыть",
+  },
+  auth: {
+    login: "Войти",
+    signUp: "Регистрация",
+    emailPlaceholder: "Email",
+    passwordPlaceholder: "Пароль",
+    needAccount: "Нет аккаунта? Регистрация",
+    haveAccount: "Уже есть аккаунт? Войти",
   },
 };
 
