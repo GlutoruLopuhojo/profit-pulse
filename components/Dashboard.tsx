@@ -27,10 +27,12 @@ export function Dashboard() {
   const [history, setHistory] = useState<SavedCalculation[]>([]);
   const [mode, setMode] = useState<InputMode>("manual");
   const [inputs, setInputs] = useState<FinancialInputs>(DEFAULT_FINANCIAL_INPUTS);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const metrics = useMemo(() => calculateFinancialMetrics(inputs), [inputs]);
 
   useEffect(() => {
+    setIsLoaded(true);
     if (user) fetchHistory();
   }, [user]);
 
@@ -59,6 +61,9 @@ export function Dashboard() {
   const deleteCalculation = async (id: string) => {
     await supabase.from('calculations').delete().eq('id', id);
     fetchHistory();
+  if (!isLoaded) return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
+
+
   };
 
   return (

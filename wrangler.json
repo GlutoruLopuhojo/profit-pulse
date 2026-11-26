@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "profit-pulse",
+  "main": ".open-next/server-functions/default/index.mjs",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "alias": {
+    "critters": "./lib/empty-module.js",
+    "@opentelemetry/api": "./lib/empty-module.js"
+  }
+}
