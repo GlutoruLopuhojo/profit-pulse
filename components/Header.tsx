@@ -1,8 +1,11 @@
 "use client";
 
-import { Activity, Globe } from "lucide-react";
+import { useState } from "react";
+import { Activity, Globe, User, LogOut } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import type { Locale } from "@/lib/types";
+import { useAuthStore } from "@/lib/auth-store";
+import { AuthModal } from "./AuthModal";
 
 const LOCALES: { code: Locale; label: string }[] = [
   { code: "en", label: "EN" },
@@ -11,6 +14,8 @@ const LOCALES: { code: Locale; label: string }[] = [
 
 export function Header() {
   const { locale, setLocale, t } = useLanguage();
+  const { user, profile, signOut } = useAuthStore();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/85 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-950/85">
@@ -35,10 +40,24 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="hidden items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 sm:inline-flex">
-            <Globe className="h-3.5 w-3.5" aria-hidden="true" />
-            {t.header.languageLabel}
-          </span>
+          {user ? (
+            <div className="flex items-center gap-3 text-xs">
+              <span className="flex items-center gap-2">
+                {user.email}
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${profile?.is_pro ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}`}>
+                  {profile?.is_pro ? 'PRO' : 'FREE'}
+                </span>
+              </span>
+              <button onClick={() => signOut()} className="flex items-center gap-1 text-red-600">
+                <LogOut className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => setIsAuthModalOpen(true)} className="flex items-center gap-1 rounded bg-emerald-600 px-3 py-1 text-xs text-white">
+              <User className="h-3.5 w-3.5" /> Login
+            </button>
+          )}
+
           <div
             role="group"
             aria-label={t.header.languageLabel}
@@ -65,6 +84,8 @@ export function Header() {
           </div>
         </div>
       </div>
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 }
+

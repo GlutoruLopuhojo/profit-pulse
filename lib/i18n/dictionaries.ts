@@ -109,6 +109,17 @@ export interface Dictionary {
     recommendationsTitle: string;
     errorMessage: string;
   };
+  proModal: {
+    title: string;
+    subtitle: string;
+    feature1: string;
+    feature2: string;
+    feature3: string;
+    ruButton: string;
+    globalButton: string;
+    stubNotice: string;
+    close: string;
+  };
 }
 
 const en: Dictionary = {
@@ -209,8 +220,7 @@ const en: Dictionary = {
     analyzeButton: "Run AI Analysis",
     reanalyzeButton: "Refresh Analysis",
     analyzing: "Analyzing metrics...",
-    emptyPrompt:
-      "Click “Run AI Analysis” to evaluate margin health, cost ratios, and break-even risk based on your current numbers.",
+    emptyPrompt: "Click “Run AI Analysis” to evaluate margin health, cost ratios, and break-even risk based on your current numbers.",
     scoreLabel: "Health Score",
     statusLabels: {
       healthy: "Healthy",
@@ -220,6 +230,17 @@ const en: Dictionary = {
     insightsTitle: "Key Diagnostics",
     recommendationsTitle: "Actionable Recommendations",
     errorMessage: "Failed to run financial analysis. Please try again.",
+  },
+  proModal: {
+    title: "Upgrade to ProfitPulse PRO",
+    subtitle: "Unlock unlimited AI financial diagnostics, unlimited saved reports in history, and advanced forecasting tools.",
+    feature1: "⚡ Unlimited AI Financial Advisor scans",
+    feature2: "📂 Unlimited saved reports in History",
+    feature3: "🚀 Priority execution & VIP support",
+    ruButton: "Оплатить картой РФ / СБП (990 ₽/мес)",
+    globalButton: "Pay with International Card ($12/мес)",
+    stubNotice: "Скоро запуск / Связаться в Telegram",
+    close: "Close",
   },
 };
 
@@ -321,8 +342,7 @@ const ru: Dictionary = {
     analyzeButton: "Анализировать финансы",
     reanalyzeButton: "Обновить анализ",
     analyzing: "Анализируем показатели...",
-    emptyPrompt:
-      "Нажмите «Анализировать финансы», чтобы получить оценку маржинальности, структуры расходов и риска безубыточности.",
+    emptyPrompt: "Нажмите «Анализировать финансы», чтобы получить оценку маржинальности, структуры расходов и риска безубыточности.",
     scoreLabel: "Индекс здоровья",
     statusLabels: {
       healthy: "Стабильно",
@@ -332,6 +352,17 @@ const ru: Dictionary = {
     insightsTitle: "Ключевые наблюдения",
     recommendationsTitle: "Практические рекомендации",
     errorMessage: "Ошибка при выполнении анализа. Попробуйте снова.",
+  },
+  proModal: {
+    title: "Перейти на ProfitPulse PRO",
+    subtitle: "Разблокируйте неограниченный ИИ-анализ финансов, бесконечную историю расчетов и расширенные инструменты.",
+    feature1: "⚡ Неограниченные проверки ИИ-советника",
+    feature2: "📂 Безлимитные сохраненные отчеты",
+    feature3: "🚀 Приоритетная поддержка и новые функции",
+    ruButton: "Оплатить картой РФ / СБП (990 ₽/мес)",
+    globalButton: "Pay with International Card ($12/мес)",
+    stubNotice: "Скоро запуск / Связаться в Telegram",
+    close: "Закрыть",
   },
 };
 
