@@ -3,25 +3,39 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { useLanguage } from "./providers/LanguageProvider";
+import { useAuthStore } from "@/lib/auth-store";
 
 export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { t } = useLanguage();
+  const { setUser, refreshProfile } = useAuthStore();
 
   if (typeof document === "undefined" || !isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (!isSupabaseConfigured) {
+      setErrorMessage("Supabase keys are missing in Netlify Environment Variables");
+      return;
+    }
+
     setLoading(true);
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        if (data.session) {
+          setUser(data.session.user);
+          await refreshProfile();
+        }
       } else {
         const { data, error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
@@ -32,10 +46,15 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             is_pro: false,
           });
         }
+        if (data.session) {
+          setUser(data.session.user);
+          await refreshProfile();
+        }
       }
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setErrorMessage(error.message || "An error occurred during authentication.");
     } finally {
       setLoading(false);
     }
@@ -53,11 +72,17 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         <h2 className="mb-6 text-xl font-bold text-white">
           {isLogin ? (t.auth?.login || "Login") : (t.auth?.signUp || "Sign Up")}
         </h2>
+        {errorMessage && (
+          <div className="mb-4 rounded-lg bg-red-500/10 border border-red-500/20 p-3 text-xs text-red-400">
+            {errorMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="email"
             placeholder={t.auth?.emailPlaceholder || "Email"}
             className="rounded-lg border border-slate-700 bg-slate-950 p-3 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -65,6 +90,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
             type="password"
             placeholder={t.auth?.passwordPlaceholder || "Password"}
             className="rounded-lg border border-slate-700 bg-slate-950 p-3 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -77,7 +103,10 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           </button>
         </form>
         <button
-          onClick={() => setIsLogin(!isLogin)}
+          onClick={() => {
+            setIsLogin(!isLogin);
+            setErrorMessage(null);
+          }}
           className="mt-6 w-full text-center text-sm text-slate-400 hover:text-white"
         >
           {isLogin
