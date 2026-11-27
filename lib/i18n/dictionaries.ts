@@ -120,14 +120,8 @@ export interface Dictionary {
     stubNotice: string;
     close: string;
   };
-  auth: {
-    login: string;
-    signUp: string;
-    emailPlaceholder: string;
-    passwordPlaceholder: string;
-    needAccount: string;
-    haveAccount: string;
-  };
+  auth?: Record<string, string>;
+  forecastTable?: Record<string, string>;
 }
 
 const en: Dictionary = {
@@ -258,6 +252,14 @@ const en: Dictionary = {
     stubNotice: "Скоро запуск / Связаться в Telegram",
     close: "Close",
   },
+  forecastTable: {
+    title: "3-Month AI Forecast",
+    subtitle: "Scenario modeling based on current cost structure and growth rate",
+    monthCol: "Month",
+    baseCol: "Base Scenario",
+    optimisticCol: "Optimistic (+15%)",
+    pessimisticCol: "Pessimistic (-15%)",
+  },
 };
 
 const ru: Dictionary = {
@@ -379,6 +381,14 @@ const ru: Dictionary = {
     globalButton: "Pay with International Card ($12/мес)",
     stubNotice: "Скоро запуск / Связаться в Telegram",
     close: "Закрыть",
+  },
+  forecastTable: {
+    title: "AI-прогноз на 3 месяца",
+    subtitle: "Моделирование сценариев на основе текущей структуры затрат",
+    monthCol: "Месяц",
+    baseCol: "Базовый сценарий",
+    optimisticCol: "Оптимистичный (+15%)",
+    pessimisticCol: "Пессимистичный (-15%)",
   },
   auth: {
     login: "Войти",

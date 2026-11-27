@@ -1,5 +1,5 @@
 "use client"; import  { useMemo, useState, useEffect } from "react";
-import { Save, History, Trash2, FileSpreadsheet, SlidersHorizontal } from "lucide-react";
+import { Save, History, Trash2, FileSpreadsheet, SlidersHorizontal, Printer } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuthStore } from "@/lib/auth-store";
 import type { FinancialMetrics, FinancialInputs, InputMode } from "@/lib/types";
@@ -61,10 +61,9 @@ export function Dashboard() {
   const deleteCalculation = async (id: string) => {
     await supabase.from('calculations').delete().eq('id', id);
     fetchHistory();
-  if (!isLoaded) return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
-
-
   };
+
+  if (!isLoaded) return <div className="min-h-screen bg-slate-50 dark:bg-slate-950" />;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">

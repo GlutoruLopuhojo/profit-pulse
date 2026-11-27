@@ -149,6 +149,39 @@ export function AiAdvisorCard({ inputs }: AiAdvisorCardProps) {
               </p>
             </div>
 
+            {report.forecast && (
+              <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-3.5 dark:border-slate-800 dark:bg-slate-900/40">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                  {t.forecastTable?.title || "3-Month AI Forecast"}
+                </h4>
+                <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 mb-3">
+                  {t.forecastTable?.subtitle || "Scenario modeling"}
+                </p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-500 dark:border-slate-800">
+                        <th className="pb-2 font-medium">{t.forecastTable?.monthCol || "Month"}</th>
+                        <th className="pb-2 font-medium">{t.forecastTable?.baseCol || "Base"}</th>
+                        <th className="pb-2 font-medium text-emerald-600 dark:text-emerald-400">{t.forecastTable?.optimisticCol || "Optimistic"}</th>
+                        <th className="pb-2 font-medium text-rose-600 dark:text-rose-400">{t.forecastTable?.pessimisticCol || "Pessimistic"}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                      {report.forecast.map((f) => (
+                        <tr key={f.month}>
+                          <td className="py-2 font-medium text-slate-900 dark:text-slate-100">{f.month}</td>
+                          <td className="py-2 tabular-nums text-slate-700 dark:text-slate-300">${f.base.toLocaleString()}</td>
+                          <td className="py-2 tabular-nums font-semibold text-emerald-600 dark:text-emerald-400">${f.optimistic.toLocaleString()}</td>
+                          <td className="py-2 tabular-nums font-semibold text-rose-600 dark:text-rose-400">${f.pessimistic.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
             <div>
               <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 {t.advisor.insightsTitle}

@@ -20,9 +20,18 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     setLoading(true);
     try {
       if (isLogin) {
-        await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
       } else {
-        await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) throw error;
+        if (data.user) {
+          await supabase.from("profiles").upsert({
+            id: data.user.id,
+            email: data.user.email || email,
+            is_pro: false,
+          });
+        }
       }
       onClose();
     } catch (error) {

@@ -62,4 +62,10 @@ export interface AnalyzeResponse {
   recommendations: string[];
   metrics: FinancialMetrics;
   generatedAt: string;
+  forecast?: Array<{
+    month: string;
+    base: number;
+    optimistic: number;
+    pessimistic: number;
+  }>;
 }

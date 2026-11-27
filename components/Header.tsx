@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Activity, Globe, User, LogOut } from "lucide-react";
+import { Activity, Globe, User, LogOut, Printer } from "lucide-react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import type { Locale } from "@/lib/types";
 import { useAuthStore } from "@/lib/auth-store";
@@ -40,6 +40,12 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          >
+            <Printer className="h-3.5 w-3.5" /> {locale === "ru" ? "Скачать PDF-отчет" : "Download PDF"}
+          </button>
           {user ? (
             <div className="flex items-center gap-3 text-xs">
               <span className="flex items-center gap-2">

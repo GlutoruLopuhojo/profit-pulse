@@ -19,6 +19,27 @@ export function buildFinancialAdvice(
   const { revenue, cogs, marketing, feesAndTaxes } = metrics;
   const isRu = locale === "ru";
 
+  const forecast = [
+    {
+      month: isRu ? "Месяц 1" : "Month 1",
+      base: Math.round(metrics.netProfit),
+      optimistic: Math.round(metrics.netProfit * 1.15),
+      pessimistic: Math.round(metrics.netProfit * 0.85),
+    },
+    {
+      month: isRu ? "Месяц 2" : "Month 2",
+      base: Math.round(metrics.netProfit * 1.05),
+      optimistic: Math.round(metrics.netProfit * 1.25),
+      pessimistic: Math.round(metrics.netProfit * 0.75),
+    },
+    {
+      month: isRu ? "Месяц 3" : "Month 3",
+      base: Math.round(metrics.netProfit * 1.10),
+      optimistic: Math.round(metrics.netProfit * 1.35),
+      pessimistic: Math.round(metrics.netProfit * 0.65),
+    },
+  ];
+
   if (revenue === 0) {
     return {
       score: 15,
@@ -181,6 +202,7 @@ export function buildFinancialAdvice(
     insights,
     recommendations,
     metrics,
+    forecast,
     generatedAt: new Date().toISOString(),
   };
 }

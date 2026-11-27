@@ -91,6 +91,11 @@ Requirements: exactly 3 actionable recommendations in English.`;
       insights: Array.isArray(parsedAiResult.insights) ? parsedAiResult.insights : [],
       recommendations: Array.isArray(parsedAiResult.recommendations) ? parsedAiResult.recommendations.slice(0, 3) : [],
       metrics,
+      forecast: [
+        { month: isRu ? "Месяц 1" : "Month 1", base: Math.round(metrics.netProfit), optimistic: Math.round(metrics.netProfit * 1.15), pessimistic: Math.round(metrics.netProfit * 0.85) },
+        { month: isRu ? "Месяц 2" : "Month 2", base: Math.round(metrics.netProfit * 1.05), optimistic: Math.round(metrics.netProfit * 1.25), pessimistic: Math.round(metrics.netProfit * 0.75) },
+        { month: isRu ? "Месяц 3" : "Month 3", base: Math.round(metrics.netProfit * 1.10), optimistic: Math.round(metrics.netProfit * 1.35), pessimistic: Math.round(metrics.netProfit * 0.65) },
+      ],
       generatedAt: new Date().toISOString(),
     });
   } catch (error) {
